@@ -1,0 +1,140 @@
+package com.example.losowaniekostek;
+
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.GridLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class MainActivity extends AppCompatActivity {
+
+    TextView miejsceNaWyniki;
+    Button SortujMalejaco, sortujRosnaco, losuj;
+    EditText liczbaKostek;
+    Random losowe;
+    GridLayout gridKostki;
+    ArrayList<Integer> wyniki = new ArrayList<>();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        losowe = new Random();
+
+        losuj = findViewById(R.id.buttonLosuj);
+        miejsceNaWyniki = findViewById(R.id.textViewWyniki);
+        SortujMalejaco = findViewById(R.id.buttonMalejaco);
+        sortujRosnaco = findViewById(R.id.buttonRosnaco);
+        liczbaKostek = findViewById(R.id.editTextLiczbakostek);
+        gridKostki = findViewById(R.id.gridKostki);
+
+        losuj.setOnClickListener(v -> losowanie());
+
+        sortujRosnaco.setOnClickListener(v -> {
+            if (wyniki.isEmpty()) {
+                miejsceNaWyniki.setText("Najpierw wykonaj losowanie");
+            } else {
+                sortowanieRosnoca();
+            }
+        });
+
+        SortujMalejaco.setOnClickListener(v -> {
+            if (wyniki.isEmpty()) {
+                miejsceNaWyniki.setText("Najpierw wykonaj losowanie");
+            } else {
+                sortowanieMalejaco();
+            }
+        });
+    }
+
+    private void losowanie() {
+        int ileKostek;
+
+        try {
+            ileKostek = Integer.parseInt(liczbaKostek.getText().toString());
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Wprowadzono niepoprawną liczbę", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (ileKostek > 0 && ileKostek <= 100) {
+            wyniki.clear();
+
+            for (int i = 0; i < ileKostek; i++) {
+                int losoweWyniki = losowe.nextInt(6) + 1;
+                wyniki.add(losoweWyniki);
+            }
+        } else {
+            Toast.makeText(this, "Liczba kostek musi być z zakresu 1-100!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        odswiezWidok();
+    }
+
+    public void odswiezWidok() {
+        gridKostki.setColumnCount(5);
+        gridKostki.removeAllViews();
+
+        StringBuilder tekstWynikow = new StringBuilder();
+
+        for (int element : wyniki) {
+            if (tekstWynikow.length() > 0) {
+                tekstWynikow.append(", ");
+            }
+            tekstWynikow.append(element);
+        }
+
+        miejsceNaWyniki.setText(tekstWynikow.toString());
+    }
+
+    private void sortowanieRosnoca() {
+        int n = wyniki.size();
+
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - 1 - i; j++) {
+                if (wyniki.get(j) > wyniki.get(j + 1)) {
+                    int temp = wyniki.get(j);
+                    wyniki.set(j, wyniki.get(j + 1));
+                    wyniki.set(j + 1, temp);
+                }
+            }
+        }
+
+        odswiezWidok();
+    }
+
+    private void sortowanieMalejaco() {
+        int n = wyniki.size();
+
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - 1 - i; j++) {
+                if (wyniki.get(j) < wyniki.get(j + 1)) {
+                    int temp = wyniki.get(j);
+                    wyniki.set(j, wyniki.get(j + 1));
+                    wyniki.set(j + 1, temp);
+                }
+            }
+        }
+
+        odswiezWidok();
+    }
+}
