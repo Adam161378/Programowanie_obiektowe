@@ -1,6 +1,8 @@
 package com.example.losowaniekostek;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
@@ -104,6 +106,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         miejsceNaWyniki.setText(tekstWynikow.toString());
+
+        for(int element : wyniki){
+            TextView kostka = new TextView(this);
+            kostka.setText(String.valueOf(element));
+            kostka.setTextSize(24);
+            kostka.setGravity(Gravity.CENTER);
+            kostka.setTextColor(Color.BLACK);
+            kostka.setBackgroundColor(Color.LTGRAY);
+            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+            params.width = 100;
+            params.height = 100;
+            kostka.setLayoutParams(params);
+            gridKostki.addView(kostka);
+        }
     }
 
     private void sortowanieRosnoca() {
