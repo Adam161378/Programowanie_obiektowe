@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rootLayout"
+    android:gravity="center"
+    android:padding="24dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/cardLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="20dp"
+        android:background="@color/card_bgDAY"
+        tools:context=".MainActivity">
+
+        <TextView
+            android:id="@+id/tvTekst"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/text_colorDAY"
+            android:textSize="26sp" />
+
+        <Button
+            android:id="@+id/btnTekst"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Zmień tekst"
+            android:backgroundTint="@color/text_colorDAY"
+            android:textColor="@color/card_bgDAY" />
+
+        <Button
+            android:id="@+id/btnKolor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Zmień kolor tekstu"
+            android:backgroundTint="@color/text_colorDAY"
+            android:textColor="@color/card_bgDAY" />
+
+        <Button
+            android:id="@+id/btnTlo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Zmień tło"
+            android:backgroundTint="@color/text_colorDAY"
+            android:textColor="@color/card_bgDAY" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/NightMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Włącz tryb nocny"
+            android:textColor="@color/text_colorDAY"
+            android:buttonTint="@color/text_colorDAY" />
+
+        <TextView
+            android:id="@+id/tvAlphaLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Przezroczystość 100%"
+            android:textColor="@color/text_colorDAY" />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="40"
+            android:progressTint="@color/text_colorDAY"
+            android:progressBackgroundTint="#A5C8CC"
+            android:thumbTint="@color/text_colorDAY" />
+
+    </LinearLayout>
+
+</LinearLayout>

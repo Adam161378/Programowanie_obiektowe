@@ -1,0 +1,11 @@
+<!-- DZIEŃ -->
+<resources>
+    <color name="card_bgDAY">#E8F4F5</color>
+    <color name="text_colorDAY">#163B46</color>
+
+
+<!-- NOC -->
+
+<color name="card_bgNIGHT">#19343D</color>
+<color name="text_colorNIGHT">#B8E7E8</color>
+</resources>

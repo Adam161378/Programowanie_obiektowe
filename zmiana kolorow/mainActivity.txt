@@ -1,0 +1,89 @@
+
+package com.example.edytortekstu;
+
+import android.os.Bundle;
+import android.content.res.ColorStateList;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.Button;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+public class MainActivity extends AppCompatActivity {
+
+    LinearLayout cardLayout;
+    TextView tvTekst;
+    TextView tvAlphaLabel;
+    Button btnTekst;
+    Button btnKolor;
+    Button btnTlo;
+    SwitchCompat NightMode;
+    SeekBar seekBar;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
+
+        cardLayout = findViewById(R.id.cardLayout);
+        tvTekst = findViewById(R.id.tvTekst);
+        tvAlphaLabel = findViewById(R.id.tvAlphaLabel);
+        btnTekst = findViewById(R.id.btnTekst);
+        btnKolor = findViewById(R.id.btnKolor);
+        btnTlo = findViewById(R.id.btnTlo);
+        NightMode = findViewById(R.id.NightMode);
+        seekBar = findViewById(R.id.seekBar);
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.rootLayout), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        NightMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
+
+            if (isChecked) {
+                cardLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.card_bgNIGHT));
+                tvTekst.setTextColor(ContextCompat.getColor(this, R.color.text_colorNIGHT));
+                tvAlphaLabel.setTextColor(ContextCompat.getColor(this, R.color.text_colorNIGHT));
+                NightMode.setTextColor(ContextCompat.getColor(this, R.color.text_colorNIGHT));
+
+                btnTekst.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_colorNIGHT)));
+                btnKolor.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_colorNIGHT)));
+                btnTlo.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_colorNIGHT)));
+
+                btnTekst.setTextColor(ContextCompat.getColor(this, R.color.card_bgNIGHT));
+                btnKolor.setTextColor(ContextCompat.getColor(this, R.color.card_bgNIGHT));
+                btnTlo.setTextColor(ContextCompat.getColor(this, R.color.card_bgNIGHT));
+
+                seekBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_colorNIGHT)));
+                seekBar.setThumbTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_colorNIGHT)));
+
+            } else {
+                cardLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.card_bgDAY));
+                tvTekst.setTextColor(ContextCompat.getColor(this, R.color.text_colorDAY));
+                tvAlphaLabel.setTextColor(ContextCompat.getColor(this, R.color.text_colorDAY));
+                NightMode.setTextColor(ContextCompat.getColor(this, R.color.text_colorDAY));
+
+                btnTekst.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_colorDAY)));
+                btnKolor.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_colorDAY)));
+                btnTlo.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_colorDAY)));
+
+                btnTekst.setTextColor(ContextCompat.getColor(this, R.color.card_bgDAY));
+                btnKolor.setTextColor(ContextCompat.getColor(this, R.color.card_bgDAY));
+                btnTlo.setTextColor(ContextCompat.getColor(this, R.color.card_bgDAY));
+
+                seekBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_colorDAY)));
+                seekBar.setThumbTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_colorDAY)));
+            }
+        });
+    }
+}
