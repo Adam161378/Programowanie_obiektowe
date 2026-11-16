@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/rootLayout"
-    android:gravity="center"
-    android:padding="24dp"
-    android:orientation="vertical">
+    tools:context=".MainActivity">
+
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/tlo1" />
+
 
     <LinearLayout
         android:id="@+id/cardLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="vertical"
         android:gravity="center"
         android:padding="20dp"
-        android:background="@color/card_bgDAY"
-        tools:context=".MainActivity">
+        android:layout_margin="24dp"
+        android:background="@color/card_bgDAY">
 
         <TextView
             android:id="@+id/tvTekst"
@@ -83,4 +91,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>
