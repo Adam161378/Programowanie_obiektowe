@@ -1,12 +1,14 @@
 
 package com.example.edytortekstu;
 
-import android.os.Bundle;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.content.res.ColorStateList;
+import android.os.Bundle;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,11 +23,17 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout cardLayout;
     TextView tvTekst;
     TextView tvAlphaLabel;
+
     Button btnTekst;
     Button btnKolor;
     Button btnTlo;
+
     SwitchCompat NightMode;
     SeekBar seekBar;
+
+    int tekst = 0;
+    boolean kolor = false;
+    boolean tlo = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,54 +44,139 @@ public class MainActivity extends AppCompatActivity {
         cardLayout = findViewById(R.id.cardLayout);
         tvTekst = findViewById(R.id.tvTekst);
         tvAlphaLabel = findViewById(R.id.tvAlphaLabel);
+
         btnTekst = findViewById(R.id.btnTekst);
         btnKolor = findViewById(R.id.btnKolor);
         btnTlo = findViewById(R.id.btnTlo);
+
         NightMode = findViewById(R.id.NightMode);
         seekBar = findViewById(R.id.seekBar);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.rootLayout), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        ViewCompat.setOnApplyWindowInsetsListener(
+                findViewById(R.id.rootLayout), (v, insets) -> {
+
+                    Insets systemBars = insets.getInsets(
+                            WindowInsetsCompat.Type.systemBars());
+
+                    v.setPadding(
+                            systemBars.left,
+                            systemBars.top,
+                            systemBars.right,
+                            systemBars.bottom
+                    );
+
+                    return insets;
+                });
+
+        btnTekst.setOnClickListener(v -> {
+
+            if (tekst == 0) {
+                tvTekst.setText("Pierwszy Tekst");
+                tvTekst.setTypeface(null, Typeface.NORMAL);
+            } else if (tekst == 1) {
+                tvTekst.setText("Drugi Tekst");
+                tvTekst.setTypeface(null, Typeface.BOLD);
+            } else {
+                tvTekst.setText("Trzeci Tekst");
+                tvTekst.setTypeface(null, Typeface.ITALIC);
+            }
+
+           
+
+            tekst++;
+
+            if (tekst > 2) {
+                tekst = 0;
+            }
         });
 
+        btnKolor.setOnClickListener(v -> {
+
+            if (kolor) {
+                tvTekst.setTextColor(Color.GREEN);
+            } else {
+                tvTekst.setTextColor(Color.BLUE);
+            }
+
+            kolor = !kolor;
+        });
+
+        btnTlo.setOnClickListener(v -> {
+
+            if (tlo) {
+                cardLayout.setBackgroundResource(R.drawable.tlo2);
+            } else {
+                cardLayout.setBackgroundResource(R.drawable.tlo3);
+            }
+
+            tlo = !tlo;
+        });
+
+        seekBar.setMax(100);
+        seekBar.setProgress(100);
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                tvTekst.setAlpha(progress / 100f);
+                tvAlphaLabel.setText("Przezroczystość: " + progress + "%");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
         NightMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
+            int kolorTla;
+            int kolorTekstu;
+
             if (isChecked) {
-                cardLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.card_bgNIGHT));
-                tvTekst.setTextColor(ContextCompat.getColor(this, R.color.text_colorNIGHT));
-                tvAlphaLabel.setTextColor(ContextCompat.getColor(this, R.color.text_colorNIGHT));
-                NightMode.setTextColor(ContextCompat.getColor(this, R.color.text_colorNIGHT));
+                kolorTla = ContextCompat.getColor(
+                        this, R.color.card_bgNIGHT);
 
-                btnTekst.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_colorNIGHT)));
-                btnKolor.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_colorNIGHT)));
-                btnTlo.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_colorNIGHT)));
-
-                btnTekst.setTextColor(ContextCompat.getColor(this, R.color.card_bgNIGHT));
-                btnKolor.setTextColor(ContextCompat.getColor(this, R.color.card_bgNIGHT));
-                btnTlo.setTextColor(ContextCompat.getColor(this, R.color.card_bgNIGHT));
-
-                seekBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_colorNIGHT)));
-                seekBar.setThumbTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_colorNIGHT)));
+                kolorTekstu = ContextCompat.getColor(
+                        this, R.color.text_colorNIGHT);
 
             } else {
-                cardLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.card_bgDAY));
-                tvTekst.setTextColor(ContextCompat.getColor(this, R.color.text_colorDAY));
-                tvAlphaLabel.setTextColor(ContextCompat.getColor(this, R.color.text_colorDAY));
-                NightMode.setTextColor(ContextCompat.getColor(this, R.color.text_colorDAY));
+                kolorTla = ContextCompat.getColor(
+                        this, R.color.card_bgDAY);
 
-                btnTekst.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_colorDAY)));
-                btnKolor.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_colorDAY)));
-                btnTlo.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_colorDAY)));
-
-                btnTekst.setTextColor(ContextCompat.getColor(this, R.color.card_bgDAY));
-                btnKolor.setTextColor(ContextCompat.getColor(this, R.color.card_bgDAY));
-                btnTlo.setTextColor(ContextCompat.getColor(this, R.color.card_bgDAY));
-
-                seekBar.setProgressTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_colorDAY)));
-                seekBar.setThumbTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_colorDAY)));
+                kolorTekstu = ContextCompat.getColor(
+                        this, R.color.text_colorDAY);
             }
+
+            cardLayout.setBackgroundColor(kolorTla);
+
+            tvTekst.setTextColor(kolorTekstu);
+            tvAlphaLabel.setTextColor(kolorTekstu);
+            NightMode.setTextColor(kolorTekstu);
+
+            btnTekst.setBackgroundTintList(
+                    ColorStateList.valueOf(kolorTekstu));
+
+            btnKolor.setBackgroundTintList(
+                    ColorStateList.valueOf(kolorTekstu));
+
+            btnTlo.setBackgroundTintList(
+                    ColorStateList.valueOf(kolorTekstu));
+
+            btnTekst.setTextColor(kolorTla);
+            btnKolor.setTextColor(kolorTla);
+            btnTlo.setTextColor(kolorTla);
+
+            seekBar.setProgressTintList(
+                    ColorStateList.valueOf(kolorTekstu));
+
+            seekBar.setThumbTintList(
+                    ColorStateList.valueOf(kolorTekstu));
         });
     }
 }
